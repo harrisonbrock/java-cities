@@ -4,6 +4,7 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -13,10 +14,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class CitiesappApplication {
 
-    static final String EXCHANGE_NAME = "LambdaSchool";
-    static final String QUEUE_CITY1 = "";
-    static final String QUEUE_CITY2 = "";
-    static final String QUEUE_SECRET = "";
+    public static final String EXCHANGE_NAME = "LambdaSchool";
+    public static final String QUEUE_CITY1 = "city1Queue";
+    public static final String QUEUE_CITY2 = "city2Queue";
+    public static final String QUEUE_SECRET = "secretQueue";
     public static void main(String[] args) {
         SpringApplication.run(CitiesappApplication.class, args);
     }
@@ -56,5 +57,9 @@ public class CitiesappApplication {
         return BindingBuilder.bind(appQueueCity2()).to(appExchange()).with(QUEUE_CITY2);
     }
 
+    @Bean
+    public Jackson2JsonMessageConverter producerJackson2MessageConvert() {
+        return new Jackson2JsonMessageConverter();
+    }
 }
 
