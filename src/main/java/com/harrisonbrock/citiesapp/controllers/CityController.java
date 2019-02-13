@@ -66,4 +66,24 @@ public class CityController {
             }
         }
     }
+
+    @GetMapping("/cities/names")
+    public void getNames() {
+        List<City> cities = cityService.findAll();
+        for (City city : cities) {
+
+            boolean rand = new Random().nextBoolean();
+
+            log.info("Sending Messages....");
+
+            if (rand) {
+                log.info("sending to secret");
+                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_SECRET);
+            }
+            else {
+                log.info("send message to city 1");
+                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY1);
+            }
+        }
+    }
 }
