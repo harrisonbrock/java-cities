@@ -5,6 +5,8 @@ import com.harrisonbrock.citiesapp.repositories.CityRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 public class CityServiceImp implements CityService {
@@ -24,5 +26,10 @@ public class CityServiceImp implements CityService {
         else {
             log.info("City not saved because city is null");
         }
+    }
+
+    @Override
+    public List<City> findAll() {
+        return repository.findAll();
     }
 }
