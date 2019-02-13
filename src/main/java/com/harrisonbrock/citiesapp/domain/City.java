@@ -14,16 +14,16 @@ public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String state;
-    private String city;
+    private String location;
     private double housePrice;
+    private int index;
 
     public City() {
     }
 
-    public City(String state, String city, double housePrice) {
-        this.state = state;
-        this.city = city;
+    public City(String location, double housePrice, int index) {
+        this.location = location;
         this.housePrice = housePrice;
+        this.index = index;
     }
 }
