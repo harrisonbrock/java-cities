@@ -24,7 +24,7 @@ public class CityController {
     }
 
     @GetMapping("/cities/afford")
-    public void getCities() {
+    public void getAfford() {
         List<City> cities = cityService.findAll();
         for (City city : cities) {
 
@@ -33,11 +33,35 @@ public class CityController {
             log.info("Sending Messages....");
 
             if (rand) {
-
+                log.info("sending to secret");
                 rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_SECRET);
             } else if (city.getIndex() < 6) {
+                log.info("sending to city 1");
                 rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY1);
             } else {
+                log.info("sending to city 2");
+                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY2);
+            }
+        }
+    }
+
+    @GetMapping("/cities/homes")
+    public void getHomes() {
+        List<City> cities = cityService.findAll();
+        for (City city : cities) {
+
+            boolean rand = new Random().nextBoolean();
+
+            log.info("Sending Messages....");
+
+            if (rand) {
+                log.info("sending to secret");
+                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_SECRET);
+            } else if (city.getHousePrice() > 200000) {
+                log.info("sending to city 1");
+                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY1);
+            } else {
+                log.info("sending to city 2");
                 rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY2);
             }
         }
