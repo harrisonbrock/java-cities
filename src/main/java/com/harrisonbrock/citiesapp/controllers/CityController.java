@@ -2,6 +2,7 @@ package com.harrisonbrock.citiesapp.controllers;
 
 import com.harrisonbrock.citiesapp.CitiesappApplication;
 import com.harrisonbrock.citiesapp.domain.City;
+import com.harrisonbrock.citiesapp.domain.CityMessage;
 import com.harrisonbrock.citiesapp.services.CityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -29,18 +30,18 @@ public class CityController {
         for (City city : cities) {
 
             boolean rand = new Random().nextBoolean();
-
+            final CityMessage message = new CityMessage(city.toString(), rand);
             log.info("Sending Messages....");
 
             if (rand) {
                 log.info("sending to secret");
-                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_SECRET);
+                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_SECRET, message);
             } else if (city.getIndex() < 6) {
                 log.info("sending to city 1");
-                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY1);
+                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY1, message);
             } else {
                 log.info("sending to city 2");
-                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY2);
+                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY2, message);
             }
         }
     }
@@ -51,18 +52,18 @@ public class CityController {
         for (City city : cities) {
 
             boolean rand = new Random().nextBoolean();
-
+            final CityMessage message = new CityMessage(city.toString(), rand);
             log.info("Sending Messages....");
 
             if (rand) {
                 log.info("sending to secret");
-                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_SECRET);
+                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_SECRET, message);
             } else if (city.getHousePrice() > 200000) {
                 log.info("sending to city 1");
-                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY1);
+                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY1, message);
             } else {
                 log.info("sending to city 2");
-                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY2);
+                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY2, message);
             }
         }
     }
@@ -73,16 +74,16 @@ public class CityController {
         for (City city : cities) {
 
             boolean rand = new Random().nextBoolean();
-
+            final CityMessage message = new CityMessage(city.toString(), rand);
             log.info("Sending Messages....");
 
             if (rand) {
                 log.info("sending to secret");
-                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_SECRET);
+                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_SECRET, message);
             }
             else {
                 log.info("send message to city 1");
-                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY1);
+                rabbitTemplate.convertAndSend(CitiesappApplication.QUEUE_CITY1, message);
             }
         }
     }
